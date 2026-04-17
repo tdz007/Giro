@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giro d'Italia 2026 – Interactive Stage Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --brand: #d81b60;
+      --brand-soft: #f8d7e6;
+      --selected: #b0004f;
+      --shadow: 0 10px 30px rgba(0,0,0,0.10);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: var(--text); background: var(--bg); }
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 12px;
+      padding: 12px;
+    }
+    .sidebar {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .sidebar header {
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.15;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .controls {
+      display: grid;
+      gap: 10px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .controls input, .controls select, .controls button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: white;
+    }
+    .controls button {
+      cursor: pointer;
+      background: var(--brand);
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+    .stage-list {
+      overflow: auto;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .stage-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fff;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+    .stage-item:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+    .stage-item.active {
+      border-color: var(--brand);
+      background: linear-gradient(180deg, #fff 0%, #fff6fa 100%);
+      box-shadow: inset 0 0 0 1px var(--brand-soft);
+    }
+    .stage-top {
+      display: flex; justify-content: space-between; gap: 10px; align-items: start;
+      margin-bottom: 6px;
+    }
+    .stage-number {
+      font-weight: 800; font-size: 14px; color: var(--selected);
+    }
+    .stage-date { color: var(--muted); font-size: 12px; text-align: right; }
+    .stage-route { font-size: 15px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+    .stage-meta { color: var(--muted); font-size: 13px; }
+    .map-wrap {
+      position: relative;
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    #map { height: 100%; width: 100%; }
+    .floating-note {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 800;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 14px;
+      padding: 10px 12px;
+      max-width: 340px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .legend {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      z-index: 800;
+      background: rgba(255,255,255,0.95);
+      border-radius: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      font-size: 13px;
+      line-height: 1.4;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(10, 12, 16, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .overlay.open { display: flex; }
+    .overlay-panel {
+      position: relative;
+      width: min(96vw, 1600px);
+      height: min(94vh, 1000px);
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+    .overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.98);
+    }
+    .overlay-title {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+    .overlay-meta {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+    .overlay-close {
+      border: none;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .overlay-body {
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3f4f6;
+    }
+    .overlay-body img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .overlay-hint {
+      position: absolute;
+      left: 18px;
+      bottom: 14px;
+      color: rgba(255,255,255,0.8);
+      font-size: 12px;
+      z-index: 5001;
+      pointer-events: none;
+    }
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; grid-template-rows: 46vh 1fr; }
+      .sidebar { order: 2; }
+      .map-wrap { order: 1; min-height: 46vh; }
+      .floating-note { max-width: 260px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <header>
+      <h1>Giro d'Italia 2026</h1>
+      <div class="sub">Interactive overview of all 21 stages. Click a stage to zoom to its location, see the date and distance, and open the official Giro stage map.</div>
+    </header>
+    <div class="controls">
+      <input id="searchBox" type="text" placeholder="Search by city, stage, or date" />
+      <select id="countryFilter">
+        <option value="all">All countries</option>
+        <option value="Bulgaria">Bulgaria</option>
+        <option value="Italy">Italy</option>
+        <option value="Switzerland">Switzerland</option>
+      </select>
+      <button id="fitAllBtn">Show full route</button>
+    </div>
+    <div id="stageList" class="stage-list"></div>
+  </aside>
+
+  <main class="map-wrap">
+    <div id="map"></div>
+    <div class="floating-note">
+      The base map uses the stage GPX route when available. Click a stage line to open the official Giro stage map full-screen.
+    </div>
+    <div class="legend">
+      <div><span class="dot" style="background:#d81b60"></span>Stage route</div>
+      <div><span class="dot" style="background:#22c55e"></span>Start</div>
+      <div><span class="dot" style="background:#ef4444"></span>Finish</div>
+    </div>
+  </main>
+</div>
+
+
+<div id="stageOverlay" class="overlay" aria-hidden="true">
+  <div class="overlay-panel" role="dialog" aria-modal="true" aria-label="Stage map viewer">
+    <div class="overlay-header">
+      <div>
+        <div id="overlayTitle" class="overlay-title">Stage map</div>
+        <div id="overlayMeta" class="overlay-meta"></div>
+      </div>
+      <button id="overlayClose" class="overlay-close" type="button">Back to map</button>
+    </div>
+    <div class="overlay-body">
+      <img id="overlayImage" alt="Official Giro stage map" />
+    </div>
+  </div>
+  <div class="overlay-hint">Click outside the image or press Esc to return to the base map.</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const stages = [
+  {stage:1,date:'2026-05-08',weekday:'Fri',distance:'147 km',start:'Nessebar',finish:'Burgas',countries:['Bulgaria'],startCoords:[42.6598,27.7360],finishCoords:[42.5048,27.4626],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/h7egsh8U7uGNsGsGE0PB_170326-094720.jpg?v=20260317094720'},
+  {stage:2,date:'2026-05-09',weekday:'Sat',distance:'221 km',start:'Burgas',finish:'Veliko Tarnovo',countries:['Bulgaria'],startCoords:[42.5048,27.4626],finishCoords:[43.0757,25.6172],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/5jqmzx6nbEIDteSXcJvG_170326-095838.jpg?v=20260317095838'},
+  {stage:3,date:'2026-05-10',weekday:'Sun',distance:'175 km',start:'Plovdiv',finish:'Sofia',countries:['Bulgaria'],startCoords:[42.1354,24.7453],finishCoords:[42.6977,23.3219],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/qw3uKPWJUaT6iIJnRhOd_170326-100939.jpg?v=20260317100939'},
+  {stage:4,date:'2026-05-12',weekday:'Tue',distance:'138 km',start:'Catanzaro',finish:'Cosenza',countries:['Italy'],startCoords:[38.9098,16.5877],finishCoords:[39.2983,16.2537],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/KOTnfQPApdectEtdVrq2_170326-111319.jpg?v=20260317111319'},
+  {stage:5,date:'2026-05-13',weekday:'Wed',distance:'203 km',start:'Praia a Mare',finish:'Potenza',countries:['Italy'],startCoords:[39.8946,15.7848],finishCoords:[40.6401,15.8051],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/BOOQJCgNnx47QRHi0AGk_170326-013241.jpg?v=20260317133241'},
+  {stage:6,date:'2026-05-14',weekday:'Thu',distance:'227 km',start:'Paestum',finish:'Napoli',countries:['Italy'],startCoords:[40.4240,15.0076],finishCoords:[40.8518,14.2681],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/YcWCKRRITVy3lrXJo09H_170326-013800.jpg?v=20260317133800'},
+  {stage:7,date:'2026-05-15',weekday:'Fri',distance:'168 km',start:'Formia',finish:'Blockhaus',countries:['Italy'],startCoords:[41.2552,13.6073],finishCoords:[42.0980,14.0900],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/46lWRVyBiQpQdLvtDjJv_170326-015330.jpg?v=20260317135330'},
+  {stage:8,date:'2026-05-16',weekday:'Sat',distance:'197 km',start:'Chieti',finish:'Fermo',countries:['Italy'],startCoords:[42.3476,14.1675],finishCoords:[43.1609,13.7181],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/6bRKdIYgaEPnClehlwjR_180326-091521.jpg?v=20260318091521'},
+  {stage:9,date:'2026-05-17',weekday:'Sun',distance:'184 km',start:'Cervia',finish:'Corno alle Scale',countries:['Italy'],startCoords:[44.2608,12.3482],finishCoords:[44.1396,10.7717],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/MESGUo9BPZWjZWSdZTGs_180326-092035.jpg?v=20260318092035'},
+  {stage:10,date:'2026-05-19',weekday:'Tue',distance:'42.0 km',start:'Viareggio',finish:'Massa',countries:['Italy'],startCoords:[43.8667,10.2500],finishCoords:[44.0354,10.1417],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/dgFoIpRuTjQy071u1xee_180326-093016.jpg?v=20260318093016'},
+  {stage:11,date:'2026-05-20',weekday:'Wed',distance:'182 km',start:'Porcari',finish:'Chiavari',countries:['Italy'],startCoords:[43.8408,10.6200],finishCoords:[44.3173,9.3224],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/hOGqNlsnrrVKv1nKUR48_180326-093918.jpg?v=20260318093918'},
+  {stage:12,date:'2026-05-21',weekday:'Thu',distance:'210 km',start:'Imperia',finish:'Novi Ligure',countries:['Italy'],startCoords:[43.8895,8.0392],finishCoords:[44.7613,8.7874],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/4yj6L8lj9WB5pH49nJoU_180326-100141.jpg?v=20260318100141'},
+  {stage:13,date:'2026-05-22',weekday:'Fri',distance:'214 km',start:'Alessandria',finish:'Verbania',countries:['Italy'],startCoords:[44.9128,8.6157],finishCoords:[45.9214,8.5517],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/12/VOmkA4CqrpZ03DZzvsFL_180326-100747.jpg?v=20260318100747'},
+  {stage:14,date:'2026-05-23',weekday:'Sat',distance:'166 km',start:'Aosta',finish:'Pila (Gressan)',countries:['Italy'],startCoords:[45.7370,7.3201],finishCoords:[45.7050,7.3000],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/rMR4gx7zZSlCX0FzkbJv_180326-101319.jpg?v=20260318101319'},
+  {stage:15,date:'2026-05-24',weekday:'Sun',distance:'159 km',start:'Voghera',finish:'Milano',countries:['Italy'],startCoords:[44.9934,9.0086],finishCoords:[45.4642,9.1900],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/e51U9I0gbRHjmEPOsp8Z_180326-101803.jpg?v=20260318101803'},
+  {stage:16,date:'2026-05-26',weekday:'Tue',distance:'141 km',start:'Bellinzona',finish:'Carì',countries:['Switzerland'],startCoords:[46.1946,9.0244],finishCoords:[46.4950,8.7040],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/yT9fjQ9qsp7KoaXtzzVf_180326-102434.jpg?v=20260318102434'},
+  {stage:17,date:'2026-05-27',weekday:'Wed',distance:'155 km',start:'Cassano d\'Adda',finish:'Andalo',countries:['Italy'],startCoords:[45.5265,9.5151],finishCoords:[46.1655,11.0045],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/OIsv6rdQuFTlwFCpgACe_180326-103600.jpg?v=20260318103600'},
+  {stage:18,date:'2026-05-28',weekday:'Thu',distance:'168 km',start:'Fai della Paganella',finish:'Pieve di Soligo',countries:['Italy'],startCoords:[46.1803,11.0703],finishCoords:[45.8985,12.1720],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/X6psavPuz8pG7dCJt2zQ_180326-104223.jpg?v=20260318104223'},
+  {stage:19,date:'2026-05-29',weekday:'Fri',distance:'166 km',start:'Feltre',finish:'Alleghe (Piani di Pezzè)',countries:['Italy'],startCoords:[46.0177,11.9043],finishCoords:[46.4106,12.0231],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/12/h1MP6zShcQRPwObcigeb_180326-104636.jpg?v=20260318104636'},
+  {stage:20,date:'2026-05-30',weekday:'Sat',distance:'179 km',start:'Gemona del Friuli',finish:'Piancavallo',countries:['Italy'],startCoords:[46.2796,13.1408],finishCoords:[46.1097,12.6654],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/GEs6m2E2Et43NYKWY55t_180326-104939.jpg?v=20260318104939'},
+  {stage:21,date:'2026-05-31',weekday:'Sun',distance:'131 km',start:'Roma (EUR)',finish:'Roma',countries:['Italy'],startCoords:[41.8304,12.4663],finishCoords:[41.9028,12.4964],mapUrl:'https://static2.giroditalia.it/wp-content/uploads/2025/11/cpEwtfXQRWopjc3hRGhI_180326-105320.jpg?v=20260318105320'}
+];
+
+const map = L.map('map', { zoomControl: true, preferCanvas: true }).setView([44.4, 11.0], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+
+const layerGroup = L.layerGroup().addTo(map);
+const stageListEl = document.getElementById('stageList');
+const searchBox = document.getElementById('searchBox');
+const countryFilter = document.getElementById('countryFilter');
+const fitAllBtn = document.getElementById('fitAllBtn');
+const stageOverlay = document.getElementById('stageOverlay');
+const overlayTitle = document.getElementById('overlayTitle');
+const overlayMeta = document.getElementById('overlayMeta');
+const overlayImage = document.getElementById('overlayImage');
+const overlayClose = document.getElementById('overlayClose');
+const routeCache = new Map();
+let currentStage = null;
+let rendered = [];
+let activeFilterKey = '';
+
+function formatDate(iso) {
+  const d = new Date(iso + 'T12:00:00');
+  return d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+
+function fallbackRouteForStage(s) {
+  return [s.startCoords, s.finishCoords];
+}
+
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('\"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function makeAltitudeProfileSvg(elevations = []) {
+  const numeric = elevations.filter(v => Number.isFinite(v));
+  if (numeric.length < 2) return '';
+
+  const width = 240;
+  const height = 72;
+  const padX = 6;
+  const padTop = 8;
+  const padBottom = 14;
+  const min = Math.min(...numeric);
+  const max = Math.max(...numeric);
+  const range = Math.max(1, max - min);
+
+  const step = Math.max(1, Math.ceil(numeric.length / 120));
+  const sampled = [];
+  for (let i = 0; i < numeric.length; i += step) sampled.push(numeric[i]);
+  if (sampled[sampled.length - 1] !== numeric[numeric.length - 1]) sampled.push(numeric[numeric.length - 1]);
+
+  const usableWidth = width - padX * 2;
+  const usableHeight = height - padTop - padBottom;
+  const points = sampled.map((v, i) => {
+    const x = padX + (i / Math.max(1, sampled.length - 1)) * usableWidth;
+    const y = padTop + (1 - ((v - min) / range)) * usableHeight;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+
+  const areaPoints = `${padX},${height - padBottom} ${points} ${width - padX},${height - padBottom}`;
+  const minLabel = `${Math.round(min)} m`;
+  const maxLabel = `${Math.round(max)} m`;
+
+  return `
+    <div style="margin-top:6px">
+      <div style="font-size:11px;color:#6b7280;margin-bottom:3px">Altitude profile</div>
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="display:block;max-width:240px;height:auto;border:1px solid #e5e7eb;border-radius:8px;background:#fff">
+        <line x1="${padX}" y1="${height - padBottom}" x2="${width - padX}" y2="${height - padBottom}" stroke="#d1d5db" stroke-width="1" />
+        <polygon points="${areaPoints}" fill="#f8d7e6"></polygon>
+        <polyline points="${points}" fill="none" stroke="#d81b60" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+        <text x="${padX}" y="11" font-size="10" fill="#6b7280">${escapeHtml(maxLabel)}</text>
+        <text x="${padX}" y="${height - 2}" font-size="10" fill="#6b7280">${escapeHtml(minLabel)}</text>
+      </svg>
+    </div>`;
+}
+
+function tooltipHtml(s, pointType = '') {
+  const prefix = pointType ? `<strong>${pointType}</strong><br>` : '';
+  const cached = routeCache.get(s.stage);
+  const profileHtml = cached?.profileSvg || '';
+  return `${prefix}<strong>Stage ${s.stage}</strong><br>${s.start} → ${s.finish}<br>${s.distance}<br>${s.weekday} ${formatDate(s.date)}${profileHtml}`;
+}
+
+function openStageOverlay(s) {
+  overlayTitle.textContent = `Stage ${s.stage}: ${s.start} → ${s.finish}`;
+  overlayMeta.textContent = `${s.weekday} ${formatDate(s.date)} · ${s.distance} · ${s.countries.join(' / ')}`;
+  overlayImage.src = s.mapUrl;
+  overlayImage.alt = `Official Giro d'Italia 2026 map for stage ${s.stage}`;
+  stageOverlay.classList.add('open');
+  stageOverlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStageOverlay() {
+  stageOverlay.classList.remove('open');
+  stageOverlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function getBounds(items) {
+  const points = [];
+  items.forEach(s => {
+    const cached = routeCache.get(s.stage);
+    if (cached && cached.coords && cached.coords.length > 1) {
+      cached.coords.forEach(pt => points.push(pt));
+    } else {
+      points.push(s.startCoords, s.finishCoords);
+    }
+  });
+  return L.latLngBounds(points);
+}
+
+function clearLayers() {
+  layerGroup.clearLayers();
+  rendered = [];
+}
+
+function renderStageList(items) {
+  stageListEl.innerHTML = '';
+  items.forEach(s => {
+    const cached = routeCache.get(s.stage);
+    let sourceLabel = 'loading GPX…';
+    if (cached?.mode === 'local-gpx') sourceLabel = 'local GPX';
+    else if (cached?.mode === 'remote-gpx') sourceLabel = 'remote GPX';
+    else if (cached?.mode === 'routed') sourceLabel = 'road fallback';
+    else if (cached?.mode === 'fallback') sourceLabel = 'direct fallback';
+
+    const item = document.createElement('div');
+    item.className = 'stage-item' + (currentStage && currentStage.stage === s.stage ? ' active' : '');
+    item.innerHTML = `
+      <div class="stage-top">
+        <div class="stage-number">Stage ${s.stage}</div>
+        <div class="stage-date">${s.weekday}<br>${formatDate(s.date)}</div>
+      </div>
+      <div class="stage-route">${s.start} → ${s.finish}</div>
+      <div class="stage-meta">${s.distance} · ${s.countries.join(' / ')} · ${sourceLabel}</div>
+    `;
+    item.addEventListener('click', () => selectStage(s.stage));
+    stageListEl.appendChild(item);
+  });
+}
+
+function stageLineStyle(selected, mode) {
+  const dashed = mode === 'fallback';
+  return {
+    color: selected ? '#b0004f' : '#d81b60',
+    weight: selected ? 6 : 4,
+    opacity: selected ? 0.95 : 0.72,
+    dashArray: dashed ? '8 8' : null
+  };
+}
+
+function renderMap(items) {
+  clearLayers();
+  items.forEach(s => {
+    const start = L.latLng(s.startCoords[0], s.startCoords[1]);
+    const finish = L.latLng(s.finishCoords[0], s.finishCoords[1]);
+    const selected = currentStage && currentStage.stage === s.stage;
+    const cached = routeCache.get(s.stage);
+    const lineCoords = (cached && cached.coords && cached.coords.length > 1) ? cached.coords : fallbackRouteForStage(s);
+    const mode = cached?.mode || 'fallback';
+
+    const line = L.polyline(lineCoords, stageLineStyle(selected, mode))
+      .bindTooltip(tooltipHtml(s), {
+        sticky: true,
+        direction: 'top',
+        offset: [0, -4]
+      });
+
+    const startMarker = L.circleMarker(start, {
+      radius: selected ? 7 : 5,
+      color: '#15803d',
+      weight: 2,
+      fillColor: '#22c55e',
+      fillOpacity: 0.95
+    }).bindTooltip(tooltipHtml(s, 'Start'), {
+      direction: 'top',
+      offset: [0, -6]
+    });
+
+    const finishMarker = L.circleMarker(finish, {
+      radius: selected ? 7 : 5,
+      color: '#b91c1c',
+      weight: 2,
+      fillColor: '#ef4444',
+      fillOpacity: 0.95
+    }).bindTooltip(tooltipHtml(s, 'Finish'), {
+      direction: 'top',
+      offset: [0, -6]
+    });
+
+    startMarker.on('click', () => selectStage(s.stage));
+    finishMarker.on('click', () => selectStage(s.stage));
+    line.on('click', () => { selectStage(s.stage); openStageOverlay(s); });
+
+    line.addTo(layerGroup);
+    startMarker.addTo(layerGroup);
+    finishMarker.addTo(layerGroup);
+    rendered.push({ stage: s.stage, line, startMarker, finishMarker, mode });
+  });
+}
+
+function getLocalGpxCandidates(stageNumber) {
+  return [
+    `./Giro26-${stageNumber}-route.gpx`,
+    `Giro26-${stageNumber}-route.gpx`,
+    `./giro26-${stageNumber}-route.gpx`,
+    `giro26-${stageNumber}-route.gpx`,
+    `./stage-${stageNumber}-route.gpx`,
+    `stage-${stageNumber}-route.gpx`
+  ];
+}
+
+function getRemoteGpxUrl(stageNumber) {
+  return `https://cdn.cyclingstage.com/images/giro-italy/2026/stage-${stageNumber}-route.gpx`;
+}
+
+function parseGpxText(gpxText) {
+  const xml = new DOMParser().parseFromString(gpxText, 'application/xml');
+  if (xml.querySelector('parsererror')) throw new Error('Invalid GPX XML');
+
+  const parseNodeList = (nodes) => Array.from(nodes).map(node => {
+    const lat = parseFloat(node.getAttribute('lat'));
+    const lon = parseFloat(node.getAttribute('lon'));
+    const eleNode = node.querySelector('ele');
+    const ele = eleNode ? parseFloat(eleNode.textContent) : null;
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    return {
+      coord: [lat, lon],
+      elevation: Number.isFinite(ele) ? ele : null
+    };
+  }).filter(Boolean);
+
+  let points = parseNodeList(xml.querySelectorAll('trkseg > trkpt'));
+  if (points.length < 2) points = parseNodeList(xml.querySelectorAll('rte > rtept'));
+  if (points.length < 2) points = parseNodeList(xml.querySelectorAll('trkpt'));
+  if (points.length < 2) points = parseNodeList(xml.querySelectorAll('rtept'));
+
+  if (points.length < 2) throw new Error('No usable coordinates found in GPX');
+  return {
+    coords: points.map(p => p.coord),
+    elevations: points.map(p => p.elevation).filter(v => Number.isFinite(v))
+  };
+}
+
+async function tryFetchText(url) {
+  const response = await fetch(url, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return response.text();
+}
+
+async function fetchRoutedFallback(s) {
+  const url = `https://router.project-osrm.org/route/v1/driving/${s.startCoords[1]},${s.startCoords[0]};${s.finishCoords[1]},${s.finishCoords[0]}?overview=full&geometries=geojson`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+  if (!data.routes || !data.routes.length || !data.routes[0].geometry || !data.routes[0].geometry.coordinates) {
+    throw new Error('No route geometry returned');
+  }
+  return data.routes[0].geometry.coordinates.map(([lon, lat]) => [lat, lon]);
+}
+
+async function fetchRouteCoords(s) {
+  if (routeCache.has(s.stage)) return routeCache.get(s.stage);
+
+  for (const candidate of getLocalGpxCandidates(s.stage)) {
+    try {
+      const gpxText = await tryFetchText(candidate);
+      const parsed = parseGpxText(gpxText);
+      const payload = { ...parsed, profileSvg: makeAltitudeProfileSvg(parsed.elevations), mode: 'local-gpx', sourceUrl: candidate };
+      routeCache.set(s.stage, payload);
+      return payload;
+    } catch (error) {}
+  }
+
+  try {
+    const remoteUrl = getRemoteGpxUrl(s.stage);
+    const gpxText = await tryFetchText(remoteUrl);
+    const parsed = parseGpxText(gpxText);
+    const payload = { ...parsed, profileSvg: makeAltitudeProfileSvg(parsed.elevations), mode: 'remote-gpx', sourceUrl: remoteUrl };
+    routeCache.set(s.stage, payload);
+    return payload;
+  } catch (error) {}
+
+  try {
+    const coords = await fetchRoutedFallback(s);
+    const payload = { coords, mode: 'routed' };
+    routeCache.set(s.stage, payload);
+    return payload;
+  } catch (error) {
+    const payload = { coords: fallbackRouteForStage(s), mode: 'fallback' };
+    routeCache.set(s.stage, payload);
+    return payload;
+  }
+}
+
+function getFilteredItems() {
+  const q = searchBox.value.trim().toLowerCase();
+  const country = countryFilter.value;
+  return stages.filter(s => {
+    const hay = `${s.stage} ${s.start} ${s.finish} ${s.date} ${s.weekday}`.toLowerCase();
+    const matchQ = !q || hay.includes(q);
+    const matchCountry = country === 'all' || s.countries.includes(country);
+    return matchQ && matchCountry;
+  });
+}
+
+function currentFilterKey(items) {
+  return items.map(s => s.stage).join(',') + '|' + (currentStage?.stage || 'all');
+}
+
+function redrawAndMaybeFit(items, fitMode = 'auto') {
+  if (currentStage && !items.some(s => s.stage === currentStage.stage)) currentStage = null;
+  renderStageList(items);
+  renderMap(items);
+
+  if (!items.length) return;
+  if (currentStage) {
+    const cached = routeCache.get(currentStage.stage);
+    const coords = (cached && cached.coords && cached.coords.length > 1) ? cached.coords : [currentStage.startCoords, currentStage.finishCoords];
+    map.fitBounds(L.latLngBounds(coords).pad(0.12), { padding: [50, 50] });
+    const stageLayer = rendered.find(r => r.stage === currentStage.stage);
+    return;
+  }
+  if (fitMode !== 'none') {
+    map.fitBounds(getBounds(items), { padding: [40, 40] });
+  }
+}
+
+async function loadRoutesForItems(items) {
+  const keyAtStart = activeFilterKey;
+  await Promise.all(items.map(fetchRouteCoords));
+  if (keyAtStart !== activeFilterKey) return;
+  redrawAndMaybeFit(items, 'auto');
+}
+
+function applyFilters() {
+  const items = getFilteredItems();
+  activeFilterKey = currentFilterKey(items);
+  redrawAndMaybeFit(items, 'auto');
+  loadRoutesForItems(items);
+}
+
+function selectStage(stageNumber) {
+  currentStage = stages.find(s => s.stage === stageNumber) || null;
+  const items = getFilteredItems();
+  activeFilterKey = currentFilterKey(items);
+  redrawAndMaybeFit(items, 'auto');
+  loadRoutesForItems(items);
+}
+
+searchBox.addEventListener('input', applyFilters);
+countryFilter.addEventListener('change', applyFilters);
+fitAllBtn.addEventListener('click', () => {
+  currentStage = null;
+  const items = getFilteredItems();
+  activeFilterKey = currentFilterKey(items);
+  redrawAndMaybeFit(items, 'auto');
+  loadRoutesForItems(items);
+});
+
+stageOverlay.addEventListener('click', (event) => {
+  if (event.target === stageOverlay) closeStageOverlay();
+});
+overlayClose.addEventListener('click', closeStageOverlay);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && stageOverlay.classList.contains('open')) closeStageOverlay();
+});
+
+applyFilters();
+</script>
+</body>
+</html>
