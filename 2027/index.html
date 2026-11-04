@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giro d'Italia 2027 – Interactive Stage Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <header>
+      <h1>Giro d'Italia 2027</h1>
+      <div class="sub">8–30 May · 21 stages · 3,418.9 km<br>Explore stages and official altitude profiles.</div>
+      <div class="sub"><a href="../giro_2026_map.html">2026 map</a> · <a href="https://www.giroditalia.it/il-percorso/" target="_blank" rel="noopener">Official 2027 route</a></div>
+    </header>
+    <div class="notice"><p id="status" role="status">Loading verified stage details…</p></div>
+    <div class="controls">
+      <input id="searchBox" aria-label="Search stages" type="search" placeholder="Search city, stage, date or weekday">
+      <select id="countryFilter" aria-label="Filter by country"><option value="all">All countries</option><option>Italy</option><option>Slovenia</option></select>
+      <div class="button-row"><button id="showAllBtn">Show all stages</button><button id="hideAllBtn">Hide all stages</button></div>
+      <button id="fitAllBtn">Fit visible stages</button>
+    </div>
+    <div id="stageList" class="stage-list" aria-label="Stages"></div>
+  </aside>
+  <main class="map-wrap" aria-label="Interactive stage map">
+    <div id="map"></div>
+    <div class="floating-note">Locations are approximate until verified GPX tracks are available. No estimated routes are drawn. Hover a marker for stage details; select a stage to explore its profile.</div>
+    <div class="legend"><div><span class="dot" style="background:#d81b60"></span>Verified GPX route, when available</div><div><span class="dot" style="background:#22c55e"></span>Start host location</div><div><span class="dot" style="background:#ef4444"></span>Finish host location</div></div>
+  </main>
+</div>
+<div id="stageOverlay" class="overlay" aria-hidden="true">
+  <div class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+    <div class="overlay-header">
+      <div><div id="overlayTitle" class="overlay-title"></div><div id="overlayMeta" class="overlay-meta"></div><a id="overlayLink" target="_blank" rel="noopener">Open original asset in a new tab</a></div>
+      <div id="assetTabs"><button data-asset="profile">Altitude profile</button><button data-asset="map">Stage map</button><button data-asset="pdf">Stage PDF</button></div>
+      <button id="overlayClose" class="overlay-close">Back to map</button>
+    </div>
+    <div class="overlay-body"><img id="overlayImage" hidden alt=""><iframe id="overlayPdf" hidden title="Official stage PDF"></iframe><p id="viewerMessage" role="status"></p></div>
+  </div>
+</div>
+<noscript>This interactive map requires JavaScript. <a href="https://www.giroditalia.it/il-percorso/">View the official route.</a></noscript>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="./route.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

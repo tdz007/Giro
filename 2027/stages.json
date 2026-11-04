@@ -1,0 +1,532 @@
+{
+  "edition": 2027,
+  "verifiedOn": "2026-11-04",
+  "stages": [
+    {
+      "stage": 1,
+      "date": "2027-05-08",
+      "start": "Trieste",
+      "finish": "Trieste",
+      "distanceKm": 172.0,
+      "countries": [
+        "Italy",
+        "Slovenia"
+      ],
+      "startCoords": [
+        45.65,
+        13.77
+      ],
+      "finishCoords": [
+        45.65,
+        13.77
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/WABCMry2YxsSXwnGAw0a_021126-023358.jpg?v=20261102143358",
+      "profileLocal": "assets/stage-01-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 2,
+      "date": "2027-05-09",
+      "start": "Ljubljana",
+      "finish": "Koper",
+      "distanceKm": 166.0,
+      "countries": [
+        "Slovenia"
+      ],
+      "startCoords": [
+        46.06,
+        14.51
+      ],
+      "finishCoords": [
+        45.55,
+        13.73
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/Kr2KrSGZIZvEt44XRNpW_021126-023856.jpg?v=20261102143856",
+      "profileLocal": "assets/stage-02-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 3,
+      "date": "2027-05-10",
+      "start": "Cervignano del Friuli",
+      "finish": "Possagno",
+      "distanceKm": 163.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.82,
+        13.34
+      ],
+      "finishCoords": [
+        45.85,
+        11.88
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/LMuXYHgbvVRY7IxuX2Vz_021126-024254.jpg?v=20261102144254",
+      "profileLocal": "assets/stage-03-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 4,
+      "date": "2027-05-11",
+      "start": "Argenta",
+      "finish": "Misano Adriatico (Autodromo Marco Simoncelli)",
+      "distanceKm": 151.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        44.61,
+        11.84
+      ],
+      "finishCoords": [
+        43.96,
+        12.68
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/9iOB6j13BNSq679mvmTS_021126-024623.jpg?v=20261102144623",
+      "profileLocal": "assets/stage-04-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 5,
+      "date": "2027-05-12",
+      "start": "Filottrano",
+      "finish": "Sarnano-Sassotetto",
+      "distanceKm": 139.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        43.44,
+        13.35
+      ],
+      "finishCoords": [
+        42.99,
+        13.24
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/Hm0HBlJ7ubjpP6kkun4X_021126-024940.jpg?v=20261102144940",
+      "profileLocal": "assets/stage-05-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 6,
+      "date": "2027-05-13",
+      "start": "Alba Adriatica",
+      "finish": "Lanciano",
+      "distanceKm": 148.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        42.83,
+        13.93
+      ],
+      "finishCoords": [
+        42.23,
+        14.39
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/D3Zme0u02Jq0XBACAo80_021126-025514.jpg?v=20261102145514",
+      "profileLocal": "assets/stage-06-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 7,
+      "date": "2027-05-14",
+      "start": "Sulmona",
+      "finish": "Campo di Giove TUDOR ITT",
+      "distanceKm": 19.6,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        42.05,
+        13.93
+      ],
+      "finishCoords": [
+        42.01,
+        14.04
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/vlmkL0GHolmSa3zrgRwr_021126-030035.jpg?v=20261102150035",
+      "profileLocal": "assets/stage-07-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 8,
+      "date": "2027-05-15",
+      "start": "Trasacco",
+      "finish": "Napoli",
+      "distanceKm": 219.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        41.96,
+        13.54
+      ],
+      "finishCoords": [
+        40.85,
+        14.27
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/11/7lsXZv3QdK88pvtTorkq_031126-062756.jpg?v=20261103182756",
+      "profileLocal": "assets/stage-08-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 9,
+      "date": "2027-05-16",
+      "start": "Itri",
+      "finish": "Subiaco-Monte Livata",
+      "distanceKm": 180.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        41.29,
+        13.53
+      ],
+      "finishCoords": [
+        41.93,
+        13.18
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/lxEEBaOulUxjNBxvooIX_021126-030930.jpg?v=20261102150930",
+      "profileLocal": "assets/stage-09-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 10,
+      "date": "2027-05-18",
+      "start": "Palombara Sabina",
+      "finish": "Norcia",
+      "distanceKm": 218.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        42.07,
+        12.77
+      ],
+      "finishCoords": [
+        42.79,
+        13.09
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/vXSEFGRUdZD4hVL62IMH_021126-031402.jpg?v=20261102151402",
+      "profileLocal": "assets/stage-10-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 11,
+      "date": "2027-05-19",
+      "start": "Gualdo Tadino",
+      "finish": "Scarperia (Autodromo del Mugello)",
+      "distanceKm": 220.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        43.23,
+        12.78
+      ],
+      "finishCoords": [
+        43.997,
+        11.372
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/qUW55evzEzWh8UOH2rfX_021126-031653.jpg?v=20261102151653",
+      "profileLocal": "assets/stage-11-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 12,
+      "date": "2027-05-20",
+      "start": "Montecatini Terme",
+      "finish": "Zeri (Loc. Passo due Santi)",
+      "distanceKm": 173.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        43.88,
+        10.77
+      ],
+      "finishCoords": [
+        44.4,
+        9.76
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/Ufc3Q6DO0wjmQ9v3JhjG_021126-031955.jpg?v=20261102151955",
+      "profileLocal": "assets/stage-12-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 13,
+      "date": "2027-05-21",
+      "start": "Borgo Val di Taro ",
+      "finish": "Reggio Emilia",
+      "distanceKm": 176.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        44.49,
+        9.77
+      ],
+      "finishCoords": [
+        44.7,
+        10.63
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/d9eSbfETaC0PUSf3lLAn_021126-032546.jpg?v=20261102152546",
+      "profileLocal": "assets/stage-13-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 14,
+      "date": "2027-05-22",
+      "start": "Cantù Arena",
+      "finish": "Piani di Bobbio/Valtorta",
+      "distanceKm": 187.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.74,
+        9.13
+      ],
+      "finishCoords": [
+        45.96,
+        9.49
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/CtA9a5XohyNukVFv3l0Q_021126-032914.jpg?v=20261102152914",
+      "profileLocal": "assets/stage-14-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 15,
+      "date": "2027-05-23",
+      "start": "Monza (Autodromo Nazionale)",
+      "finish": "Milano TUDOR ITT",
+      "distanceKm": 37.3,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.62,
+        9.28
+      ],
+      "finishCoords": [
+        45.46,
+        9.19
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/6L0knJrYXNcnMuuWnBvI_021126-033421.jpg?v=20261102153421",
+      "profileLocal": "assets/stage-15-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 16,
+      "date": "2027-05-25",
+      "start": "Sondrio",
+      "finish": "Aprica",
+      "distanceKm": 192.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        46.17,
+        9.87
+      ],
+      "finishCoords": [
+        46.15,
+        10.15
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/RsYOkUFYek5EJxn2T3c8_021126-033737.jpg?v=20261102153737",
+      "profileLocal": "assets/stage-16-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 17,
+      "date": "2027-05-26",
+      "start": "Chiari",
+      "finish": "Vo'",
+      "distanceKm": 194.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.54,
+        9.93
+      ],
+      "finishCoords": [
+        45.33,
+        11.64
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/72OAshJOZUfilu8NOqwY_021126-034240.jpg?v=20261102154240",
+      "profileLocal": "assets/stage-17-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 18,
+      "date": "2027-05-27",
+      "start": "Rovereto",
+      "finish": "Madonna di Campiglio",
+      "distanceKm": 154.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.89,
+        11.04
+      ],
+      "finishCoords": [
+        46.23,
+        10.83
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/3iIs2h7sZ4KpnHvSaino_021126-034505.jpg?v=20261102154505",
+      "profileLocal": "assets/stage-18-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 19,
+      "date": "2027-05-28",
+      "start": "Rovereto",
+      "finish": "Sacile",
+      "distanceKm": 199.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.89,
+        11.04
+      ],
+      "finishCoords": [
+        45.95,
+        12.5
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/ZdloefVuzfEsyerW80cE_021126-034828.jpg?v=20261102154828",
+      "profileLocal": "assets/stage-19-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 20,
+      "date": "2027-05-29",
+      "start": "Pordenone",
+      "finish": "Monte Zoncolan",
+      "distanceKm": 180.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        45.96,
+        12.66
+      ],
+      "finishCoords": [
+        46.5,
+        12.93
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/cJrh0droB9vuGBoaTOO1_021126-035112.jpg?v=20261102155112",
+      "profileLocal": "assets/stage-20-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    },
+    {
+      "stage": 21,
+      "date": "2027-05-30",
+      "start": "Roma",
+      "finish": "Roma",
+      "distanceKm": 131.0,
+      "countries": [
+        "Italy"
+      ],
+      "startCoords": [
+        41.9,
+        12.5
+      ],
+      "finishCoords": [
+        41.9,
+        12.5
+      ],
+      "coordinatePrecision": "Approximate host location; not the race start or finish line",
+      "profileUrl": "https://static2.giroditalia.it/wp-content/uploads/2026/10/p6jY73mqf9XAQLlIaPTq_021126-035503.jpg?v=20261102155503",
+      "profileLocal": "assets/stage-21-profile.jpg",
+      "gpxUrl": null,
+      "pdfUrl": null,
+      "mapUrl": null,
+      "sourceUrl": "https://www.giroditalia.it/il-percorso/"
+    }
+  ]
+}

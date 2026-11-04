@@ -1,0 +1,152 @@
+{
+  "verifiedOn": "2026-11-04",
+  "assets": [
+    {
+      "stage": 1,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/WABCMry2YxsSXwnGAw0a_021126-023358.jpg?v=20261102143358",
+      "file": "assets/stage-01-profile.jpg",
+      "bytes": 104067,
+      "sha256": "7d6dcff5bd27e64e296f63c789ac45c46ecf063c1b3473dcabcfb071ebcf4b68"
+    },
+    {
+      "stage": 2,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/Kr2KrSGZIZvEt44XRNpW_021126-023856.jpg?v=20261102143856",
+      "file": "assets/stage-02-profile.jpg",
+      "bytes": 106824,
+      "sha256": "8bafaeffbe72f080e73184038bb6470df00547fbf6d1202efda8ccd10916b16f"
+    },
+    {
+      "stage": 3,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/LMuXYHgbvVRY7IxuX2Vz_021126-024254.jpg?v=20261102144254",
+      "file": "assets/stage-03-profile.jpg",
+      "bytes": 98188,
+      "sha256": "c508a275f5e69055fb88b468dcf4e700d986ed3d57db4573bb124e15e08d36f5"
+    },
+    {
+      "stage": 4,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/9iOB6j13BNSq679mvmTS_021126-024623.jpg?v=20261102144623",
+      "file": "assets/stage-04-profile.jpg",
+      "bytes": 92675,
+      "sha256": "ae65d0c2e08ddb47b82fbb286efa3ada6ea393f64e26f7273edb8a0505f2dce4"
+    },
+    {
+      "stage": 5,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/Hm0HBlJ7ubjpP6kkun4X_021126-024940.jpg?v=20261102144940",
+      "file": "assets/stage-05-profile.jpg",
+      "bytes": 143790,
+      "sha256": "7f35d0977a4789a68dcd85f2894de21febc6236543526269dc2cea0697bb8b29"
+    },
+    {
+      "stage": 6,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/D3Zme0u02Jq0XBACAo80_021126-025514.jpg?v=20261102145514",
+      "file": "assets/stage-06-profile.jpg",
+      "bytes": 95121,
+      "sha256": "4639805867195fb4cf4ece043a3bf26ab5ee2ba4fc1df5f8b3301e435919e585"
+    },
+    {
+      "stage": 7,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/vlmkL0GHolmSa3zrgRwr_021126-030035.jpg?v=20261102150035",
+      "file": "assets/stage-07-profile.jpg",
+      "bytes": 106792,
+      "sha256": "1179d3d05d27f51a1f169cfd0c7fb2956350e2f123d2c2e80628aeeee5c227ad"
+    },
+    {
+      "stage": 8,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/11/7lsXZv3QdK88pvtTorkq_031126-062756.jpg?v=20261103182756",
+      "file": "assets/stage-08-profile.jpg",
+      "bytes": 141907,
+      "sha256": "b1657c2f326b9afa9bb4eb8222c2e9333af7d390b0394d30fbbf230c514cd63c"
+    },
+    {
+      "stage": 9,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/lxEEBaOulUxjNBxvooIX_021126-030930.jpg?v=20261102150930",
+      "file": "assets/stage-09-profile.jpg",
+      "bytes": 134381,
+      "sha256": "5a567d802b0492cb8ce8bd2efc76f16b78eb7145f20bb6b58903d2e9aed6a962"
+    },
+    {
+      "stage": 10,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/vXSEFGRUdZD4hVL62IMH_021126-031402.jpg?v=20261102151402",
+      "file": "assets/stage-10-profile.jpg",
+      "bytes": 114835,
+      "sha256": "fecde6f345960a206bac181398718258a5eda73b82cf32ad2e828f9e9d9e6f8a"
+    },
+    {
+      "stage": 11,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/qUW55evzEzWh8UOH2rfX_021126-031653.jpg?v=20261102151653",
+      "file": "assets/stage-11-profile.jpg",
+      "bytes": 109716,
+      "sha256": "06a13e5b2d0085e07ebb4b5a86150ec75b48f64f32657c7188ed6de2d34fa44f"
+    },
+    {
+      "stage": 12,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/Ufc3Q6DO0wjmQ9v3JhjG_021126-031955.jpg?v=20261102151955",
+      "file": "assets/stage-12-profile.jpg",
+      "bytes": 140224,
+      "sha256": "046a0e30ebc5d2b9d9be6aee3d6931d8a9dbc4135858e073a7d8e4efac6904d4"
+    },
+    {
+      "stage": 13,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/d9eSbfETaC0PUSf3lLAn_021126-032546.jpg?v=20261102152546",
+      "file": "assets/stage-13-profile.jpg",
+      "bytes": 97238,
+      "sha256": "2cf19c6f0cc28ac29b5622c79a91d0e13bec1e89ad4727d4c945b838f618ca78"
+    },
+    {
+      "stage": 14,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/CtA9a5XohyNukVFv3l0Q_021126-032914.jpg?v=20261102152914",
+      "file": "assets/stage-14-profile.jpg",
+      "bytes": 163076,
+      "sha256": "2f67f2b21636a7ab8bc86bc23cbf188fd3ca4bb0d593b46d145c687bec9b8b4e"
+    },
+    {
+      "stage": 15,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/6L0knJrYXNcnMuuWnBvI_021126-033421.jpg?v=20261102153421",
+      "file": "assets/stage-15-profile.jpg",
+      "bytes": 81530,
+      "sha256": "18c466d3043e818622b4be40143227ce0223c9b47b35c17fbb4ad6f0f14e4ec4"
+    },
+    {
+      "stage": 16,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/RsYOkUFYek5EJxn2T3c8_021126-033737.jpg?v=20261102153737",
+      "file": "assets/stage-16-profile.jpg",
+      "bytes": 161794,
+      "sha256": "33937f072ea9b4438a5bd56ee2c714ac17e42d4c45939de975eeb65d55a67171"
+    },
+    {
+      "stage": 17,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/72OAshJOZUfilu8NOqwY_021126-034240.jpg?v=20261102154240",
+      "file": "assets/stage-17-profile.jpg",
+      "bytes": 92107,
+      "sha256": "85b5f168408d19cb99f4445d352dd184683d5888130d6c22c82cce0b7e828cca"
+    },
+    {
+      "stage": 18,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/3iIs2h7sZ4KpnHvSaino_021126-034505.jpg?v=20261102154505",
+      "file": "assets/stage-18-profile.jpg",
+      "bytes": 157083,
+      "sha256": "b7b0df46ee922f2e2a918ebe912cdf752359f8a36508e5f7b9455b379248f739"
+    },
+    {
+      "stage": 19,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/ZdloefVuzfEsyerW80cE_021126-034828.jpg?v=20261102154828",
+      "file": "assets/stage-19-profile.jpg",
+      "bytes": 112599,
+      "sha256": "ab075ae1bec8e863c931e4b070ba7ab5b59d652e6a599b0732a020ddfaf25976"
+    },
+    {
+      "stage": 20,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/cJrh0droB9vuGBoaTOO1_021126-035112.jpg?v=20261102155112",
+      "file": "assets/stage-20-profile.jpg",
+      "bytes": 145899,
+      "sha256": "da51db48b2ca13b0eda8e31911825e150e28807c81887eb0e9b8cef02f9877cc"
+    },
+    {
+      "stage": 21,
+      "url": "https://static2.giroditalia.it/wp-content/uploads/2026/10/p6jY73mqf9XAQLlIaPTq_021126-035503.jpg?v=20261102155503",
+      "file": "assets/stage-21-profile.jpg",
+      "bytes": 90588,
+      "sha256": "63a7eb4ecdbff5dd8c6c73c089a0d4f3753e532cf37ff79cd8c280eea94512a6"
+    }
+  ]
+}
